@@ -37,7 +37,7 @@ def api_message():
             "problemStatement" : newProblem["problemStatement"],
             "tag" : newProblem["tag"],
             "contactAsker" : newProblem["contactAsker"],
-            "relatedProblems" : {},
+            "relatedProblems" : [],
             "solutionId" : ""
         }
 
@@ -56,15 +56,27 @@ def api_message():
                 }
             }
         )
-        print ("updated the related doc")
+        return jsonify(
+            {
+                "status" : "true",
+                "message" : "updated the related doc"
+            }
+        )
         
     else:
         # Treat this as a new problem, make a new entry in the UniqueProblems DB
         uniqueProblems.insert(newUniqueProblemEntry)
-        print ("New entry inserted in Unique Problems table")
-
-    return "true"
-
+        return jsonify(
+            {
+                "status" : "true",
+                "message" : "New entry inserted in Unique Problems table"
+            }
+        )
+    
+    {
+        "status" : "false",
+        "message" : "Don't know what went wrong"
+    }
 
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
